@@ -1,0 +1,17 @@
+{
+    "editor.formatOnSave": false,
+    "editor.tabSize": 4,
+    "eslint.trace.server": "messages",
+    "eslint.workingDirectories": [
+        "./src"
+    ],
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
+    "editor.codeActionsOnSaveTimeout": 5000,
+    "eslint.validate": [
+        "javascript",
+        "react",
+        "html"
+    ]
+}
