@@ -1,17 +1,18 @@
 import React from 'react'
-import Button from './components/Button/Button'
-import Alert from './components/Alert/Alert'
-import './App.css'
+import Menu from './components/Menu/Menu'
+import MenuItem from './components/Menu/MenuItem'
 
 function App() {
 
   return (
     <div className="App">
-      <div className='children'>
-        
-      </div>
-      {/* <div style={{clear: 'both'}}></div> */}
-      <div className='triangle'></div>
+      <Menu defaultIndex={0} onSelect={(index) => {
+        console.log(index)
+      }}>
+        <MenuItem>link</MenuItem>
+        <MenuItem>link</MenuItem>
+        <MenuItem>link</MenuItem>
+      </Menu>
     </div>
   );
 }

@@ -1,33 +1,4 @@
 .App {
-  /* height: 500px; */
-  background-color: green;
-  /* position: relative; */
-  /* display: flex; */
-  font-size: 16px;
+  
 
 }
-.App:after {
-  /* content: '';
-  display: block;
-  height: 0;
-  visibility: hidden;
-  clear: both; */
-}
-.children {
-    font-size: 14px;
-        background: red;
-        display: inline-block;
-        width: 100px;
-        height: 100px;
- 
-  }
-
-  .triangle {
-    font-size: 14px;
-        background: blue;
-        display: inline-block;
-        width: 100px;
-        height: 100px;
- 
-    border-right-width: 0;
-  }
