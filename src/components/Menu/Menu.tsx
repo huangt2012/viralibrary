@@ -3,19 +3,22 @@ import classNames from 'classnames'
 import { MenuItemProps } from './MenuItem'
 
 export type MenuMode = 'horizontal' | 'vertical'
-export type SelectCallback = (selectedIndex: number) => void
+export type SelectCallback = (selectedIndex: string) => void
 export interface MenuProps {
-    defaultIndex?: number
+    defaultIndex?: string
     className?: string
     mode?: MenuMode
     style?: React.CSSProperties
     onSelect?: SelectCallback
+    defaultOpenSubmenus?: string[]
 }
 interface IMenuContext {
-    index: number
+    index: string
     onSelect?: SelectCallback
+    mode?: MenuMode
+    defaultOpenSubmenus?: string[]
 }
-export const MenuContext = createContext<IMenuContext>({ index: 0 })
+export const MenuContext = createContext<IMenuContext>({ index: '0' })
 const Menu: React.FC<MenuProps> = (props) => {
     const {
         defaultIndex,
@@ -23,10 +26,11 @@ const Menu: React.FC<MenuProps> = (props) => {
         mode,
         style,
         children,
+        defaultOpenSubmenus,
         onSelect
     } = props
     const [currentActive, setActive] = useState(defaultIndex)
-    const handleClick = (index: number) => {
+    const handleClick = (index: string) => {
         setActive(index)
         if (onSelect) {
             onSelect(index)
@@ -36,8 +40,8 @@ const Menu: React.FC<MenuProps> = (props) => {
         return React.Children.map(children, (child, index) => {
             const childElement = child as React.FunctionComponentElement<MenuItemProps>
             const { displayName } = childElement.type
-            if (displayName === 'MenuItem') {
-                return React.cloneElement(childElement, { index })
+            if (displayName === 'MenuItem' || displayName === 'SubMenu') {
+                return React.cloneElement(childElement, { index: index.toString() })
             } else {
                 console.log('Warning: Menu has a child which is not a MenuItem Component')
             }
@@ -46,14 +50,17 @@ const Menu: React.FC<MenuProps> = (props) => {
     return (
         <ul
             className={classNames('vira-menu', className, {
-                'menu-vertical': mode === 'vertical'
+                'menu-vertical': mode === 'vertical',
+                'menu-horizontal': mode !== 'vertical'
             })}
             style={style}
             data-testid='test-menu'
         >
             <MenuContext.Provider value={{
-                index: currentActive || 0,
-                onSelect: handleClick
+                index: currentActive || '0',
+                onSelect: handleClick,
+                mode,
+                defaultOpenSubmenus
             }}>
                 {renderChildren()}
             </MenuContext.Provider>
@@ -62,8 +69,9 @@ const Menu: React.FC<MenuProps> = (props) => {
 }
 
 Menu.defaultProps = {
-    defaultIndex: 0,
-    mode: 'horizontal'
+    defaultIndex: '0',
+    mode: 'horizontal',
+    defaultOpenSubmenus: []
 }
 
 export default Menu
