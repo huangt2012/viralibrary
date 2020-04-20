@@ -1,11 +1,16 @@
 import React from 'react'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fas } from '@fortawesome/free-solid-svg-icons'
 import Menu from './components/Menu'
+import Icon from './components/Icon/Icon'
+library.add(fas)
 
 function App() {
 
   return (
     <div className="App">
-      <Menu defaultIndex={'0'} mode='vertical' defaultOpenSubmenus={['4']} onSelect={(index) => {
+      <Icon icon='arrow-alt-circle-down' size='10x' theme='primary' />
+      <Menu defaultIndex={'0'} mode='horizontal' defaultOpenSubmenus={['4']} onSelect={(index) => {
         console.log(index)
       }}>
         <Menu.Item>首页</Menu.Item>
