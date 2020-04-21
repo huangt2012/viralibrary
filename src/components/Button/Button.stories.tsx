@@ -1,6 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
+
 import Button from './Button'
 
 const defaultButton = () => (
@@ -23,6 +24,6 @@ const buttonWidthType = () => (
 )
 
 storiesOf('Button', module)
-    .add('默认button', defaultButton)
+    .add('Button', defaultButton)
     .add('不同尺寸button', buttonWithSize)
     .add('不同类型button', buttonWidthType);

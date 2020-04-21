@@ -1,0 +1,104 @@
+.vira-input-wrapper {
+    display: flex;
+    width: 100%;
+    margin-bottom: 30px;
+    position: relative;
+
+    .vira-input-icon-wrapper {
+        position: absolute;
+        display: flex;
+        width: 35px;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+        color: $input-color;
+        top: 0;
+        right: 0;
+        svg {
+            color: $input-placeholder-color;
+        }
+    }
+}
+
+.vira-input-icon-wrapper+.vira-input-inner {
+    padding-right: 35px;
+}
+.vira-input-inner {
+    width: 100%;
+    padding: $input-padding-y $input-padding-x;
+    font-family: $input-font-family;
+    font-size: $input-font-size;
+    font-weight: $input-font-weight;
+    line-height: $input-line-height;
+    color: $input-color;
+    background-color: $input-bg;
+    background-clip: padding-box;
+    border: $input-border-width solid $input-border-color;
+    border-radius: $input-border-radius;
+    box-shadow: $input-box-shadow;
+    transition: $input-transition;
+    &:focus {
+        color: $input-focus-color;
+        background-color: $input-focus-bg;
+        border-color: $input-focus-border-color;
+        outline: 0;
+        box-shadow: $input-focus-box-shadow;
+        // Avoid using mixin so we can pass custom focus shadow properly
+    }
+    &::placeholder {
+        color: $input-placeholder-color;
+        opacity: 1;
+    }
+    &:disabled,
+    &[readonly] {
+        background-color: $input-disabled-bg;
+        border-color: $input-disabled-border-color;
+        // iOS fix for unreadable disabled content; see https://github.com/twbs/bootstrap/issues/11655.
+        opacity: 1;
+    }
+}
+
+.vira-input-group-prefix,
+.vira-input-group-suffix {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: $input-padding-y $input-padding-x;
+    margin-bottom: 0;
+    font-size: $input-font-size; // Match inputs
+    font-weight: $font-weight-normal;
+    line-height: $input-line-height;
+    color: $input-group-addon-color;
+    text-align: center;
+    white-space: nowrap;
+    background-color: $input-group-addon-bg;
+    border: $input-border-width solid $input-group-addon-border-color;
+    border-radius: $input-border-radius;
+}
+
+.vira-input-group-suffix + .btn {
+  padding: 0;
+  border: 0;
+}
+
+.input-group > .vira-input-group-prefix,
+.input-group.input-group-suffix > .vira-input-inner {
+    @include border-right-radius(0);
+}
+
+.input-group > .vira-input-group-suffix,
+.input-group.input-group-prefix > .vira-input-inner {
+    @include border-left-radius(0);
+}
+
+.input-size-sm .vira-input-inner {
+    padding: $input-padding-y-sm $input-padding-x-sm;
+    font-size: $input-font-size-sm;
+    border-radius: $input-border-radius-sm;
+}
+
+.input-size-lg .vira-input-inner {
+    padding: $input-padding-y-lg $input-padding-x-lg;
+    font-size: $input-font-size-lg;
+    border-radius: $input-border-radius-lg;
+}

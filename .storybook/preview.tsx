@@ -1,13 +1,13 @@
 import { configure, addDecorator, addParameters } from '@storybook/react';
-// import { withInfo } from '@storybook/addons'
 import React from 'react'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
+import { withInfo } from '@storybook/addon-info'
 import "../src/styles/index.scss"
 library.add(fas)
 const wrapperStyle: React.CSSProperties = {
     padding: '20px 40px',
-    width: '500px'
+    width: '1000px'
 }
 
 const storyWrapper = (stroyFn: any) => (
@@ -17,12 +17,14 @@ const storyWrapper = (stroyFn: any) => (
     </div>
 )
 addDecorator(storyWrapper)
-// addDecorator(withInfo)
+addDecorator(withInfo)
 addParameters({ info: { inline: true, header: false } })
 
 const loaderFn = () => {
     return [
-        require('../src/components/Button/Button.stories.tsx')
+        require('../src/components/Button/Button.stories.tsx'),
+        require('../src/components/Menu/Menu.stories.tsx'),
+        // require('../src/components/Input/Input.stories.tsx')
     ]
 }
 
