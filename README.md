@@ -1,6 +1,10 @@
 # veralibrary
 
-# npm i 
-# npm start
-# npm run storybook to run the library
-# npm run test to run the test
+# 安装依赖
+  npm install 
+# 开始项目
+  npm start
+# 运行storybook
+  npm run storybook 
+# 运行单元测试
+  npm run test 
