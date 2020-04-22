@@ -2,6 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import Upload, { UploadFile } from './Upload'
+import Icon from '../Icon/Icon'
 
 const defaultFileList: UploadFile[] = [
   { uid: '123', size: 1234, name: 'hello.md', status: 'uploading', percent: 30 },
@@ -24,11 +25,17 @@ const DefaultComponent = () => {
 
     return (
         <Upload
-            action='http://jsonplaceholder.typicode.com/posts'
-            defaultFileList={defaultFileList} 
-            onChange={action('change')}
-            beforeUpload={checkPromise}
-        />
+            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+            onChange={action('changed')}
+            onRemove={action('removed')}
+            name="fileName"
+            multiple
+            drag
+        >
+            <Icon icon="upload" size="2x" theme="secondary" />
+            <br />
+            <p>Drag file over to upload</p>
+        </Upload>
     )
 }
 

@@ -1,8 +1,8 @@
 import React, { FC, useRef, useState, ChangeEvent } from 'react'
-import classNames from 'classnames'
 import axios from 'axios'
 import Button from '../Button/Button'
 import UploadList from './UploadList'
+import Dragger from './Dragger'
 
 export type UploadFileStatus = 'ready' | 'uploading' | 'success' | 'error'
 
@@ -34,6 +34,17 @@ export interface UploadProps {
     onChange?: (file: File) => void
     /** 移除某个已上传的文件 */
     onRemove?: (file: UploadFile) => void
+    /** 设置上传头部信息 */
+    headers?: { [key: string]: any }
+    /** 设置上传文件时参数名 */
+    name?: string;
+    /** 上传时其他参数 */
+    data?: { [key: string]: any };
+    /** 是否需要cookie */
+    withCredentials?: boolean;
+    accept?: string;
+    multiple?: boolean;
+    drag?: boolean;
 }
 
 /**
@@ -51,7 +62,15 @@ export const Upload: FC<UploadProps> = (props) => {
         onError,
         beforeUpload,
         onChange,
-        onRemove
+        onRemove,
+        name,
+        headers,
+        data,
+        withCredentials,
+        accept,
+        multiple,
+        children,
+        drag
     } = props
     const fileInput = useRef<HTMLInputElement>(null)
     const [fileList, setFileList] = useState<UploadFile[]>(defaultFileList || [])
@@ -96,13 +115,24 @@ export const Upload: FC<UploadProps> = (props) => {
             percent: 0,
             raw: file
         }
-        setFileList([_file, ...fileList])
+        setFileList(prevList => {
+            return [_file, ...prevList]
+        })
+
         const formData = new FormData()
-        formData.append(file.name, file)
+        formData.append(name || 'file', file)
+        if (data) {
+            Object.keys(data).forEach(key => {
+                formData.append(key, data[key])
+            })
+        }
+
         axios.post(action, formData, {
             headers: {
+                ...headers,
                 'Content-type': 'multipart/form-data'
             },
+            withCredentials,
             onUploadProgress: (e: any) => {
                 const percentage = Math.round((e.loaded * 100) / e.total) || 0
                 if (percentage <= 100) {
@@ -152,26 +182,40 @@ export const Upload: FC<UploadProps> = (props) => {
             fileInput.current.click()
         }
     }
-    console.log(fileList)
     return (
         <div className='vira-upload'>
-            <Button
-                btnType='primary'
-                onClick={handleClick}
-            >Upload File</Button>
-            <input
-                type='file'
-                ref={fileInput}
-                className='vira-upload-input'
-                style={{ display: 'none' }}
-                onChange={handleFileChange}
-            />
+            <div className="vira-upload-input"
+                style={{ display: 'inline-block' }}
+                onClick={handleClick}>
+                {drag ?
+                    <Dragger onFile={(files) => { handleUploadFiles(files) }}>
+                        {children}
+                    </Dragger> :
+                    children
+                }
+                <input
+                    className="vira-file-input"
+                    style={{ display: 'none' }}
+                    ref={fileInput}
+                    onChange={handleFileChange}
+                    type="file"
+                    accept={accept}
+                    multiple={multiple}
+                />
+            </div>
             <UploadList
                 fileList={fileList}
                 onRemove={handleRemove}
             />
         </div>
     )
+}
+
+Upload.defaultProps = {
+    headers: {
+        'Content-type': 'multipart/form-data'
+    },
+    name: 'file'
 }
 
 export default Upload;
