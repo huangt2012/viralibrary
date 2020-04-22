@@ -1,27 +1,25 @@
-import React from 'react'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { fas } from '@fortawesome/free-solid-svg-icons'
-import Menu from './components/Menu'
-import Icon from './components/Icon/Icon'
-library.add(fas)
+import React, { ChangeEvent } from 'react'
+import axios from 'axios'
 
 function App() {
-
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files
+    if (files) {
+      const uploadFile = files[0]
+      const formData = new FormData()
+      formData.append(uploadFile.name, uploadFile)
+      axios.post('http://jsonplaceholder.typicode.com/posts', formData, {
+        headers: {
+          'Content-type': 'multipart/form-data'
+        }
+      }).then(res => {
+        console.log(res)
+      })
+    }
+  }
   return (
     <div className="App">
-      <Icon icon='arrow-alt-circle-down' size='10x' theme='primary' />
-      <Menu defaultIndex={'0'} mode='horizontal' defaultOpenSubmenus={['4']} onSelect={(index) => {
-        console.log(index)
-      }}>
-        <Menu.Item>首页</Menu.Item>
-        <Menu.Item>作品集</Menu.Item>
-        <Menu.Item>关于我们</Menu.Item>
-        <Menu.Item disabled>常见问题</Menu.Item>
-        <Menu.SubMenu title='下拉菜单'>
-          <Menu.Item>下拉菜单1</Menu.Item>
-          <Menu.Item>菜单2</Menu.Item>
-        </Menu.SubMenu>
-      </Menu>
+      <input type='file' onChange={handleChange} />
     </div>
   );
 }
