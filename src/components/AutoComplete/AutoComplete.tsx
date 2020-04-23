@@ -4,7 +4,7 @@ import Icon from '../Icon/Icon'
 import Input, { InputProps } from '../Input/Input'
 import useDebounce from '../../hooks/useDebounce'
 import useClickOutside from '../../hooks/useClickOutside'
-import Transition from '../Transiton/transition'
+import Transition from '../Transition/transition'
 
 interface OptionObj {
     value: string

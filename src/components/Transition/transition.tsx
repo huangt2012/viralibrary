@@ -21,7 +21,7 @@ const Transition: React.FC<TransitionProps> = (props) => {
             classNames={classNames || animation}
             {...restProps}
         >
-            {/* 避免当childre也有transiton属性时，会覆盖 */}
+            {/* 避免当childre也有Transition属性时，会覆盖 */}
             {wrapper ? <div>{children}</div> : children}
         </CSSTransition>
     )
