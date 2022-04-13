@@ -22,3 +22,6 @@ npm run build
 
 //发布到 npm
 npm run publish
+
+
+// 测试一下  BREAKING CHANGE 
